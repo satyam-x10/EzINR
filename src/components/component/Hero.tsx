@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import LiveLoans from "./LiveLoans";
 const Hero = () => {
   return (
     <section className="w-full py-6 md:py-12 lg:py-12 xl:py-16">
@@ -8,7 +9,7 @@ const Hero = () => {
           <div className="flex flex-col justify-center space-y-4">
             <div className="space-y-2">
               <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                Borrow or Lend with Peer Lending
+                Borrow or Lend with EzINR
               </h1>
               <p className="max-w-[600px] text-gray-500 md:text-xl dark:text-gray-400">
                 Connect with others to get the funding you need or earn interest
@@ -30,13 +31,7 @@ const Hero = () => {
               </Link>
             </div>
           </div>
-          <img
-            alt="Hero"
-            className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
-            height="310"
-            src="/placeholder.svg"
-            width="550"
-          />
+          <LiveLoans />
         </div>
       </div>
     </section>

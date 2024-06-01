@@ -4,15 +4,14 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 const NewsLetter = () => {
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 border-t">
+    <section className="w-full py-6 md:py-8 lg:py-12 border-t">
       <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6">
         <div className="space-y-3">
           <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-            Get Started with Peer Lending
+            Dont missyour loans from EzINR
           </h2>
           <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-            Apply for a loan or become a lender and start earning interest
-            today.
+            We will inform you once someone is interested in your loan request on this email.
           </p>
         </div>
         <div className="mx-auto w-full max-w-sm space-y-2">
@@ -24,12 +23,6 @@ const NewsLetter = () => {
             />
             <Button type="submit">Get Started</Button>
           </form>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
-            Sign up to start borrowing or lending.
-            <Link className="underline underline-offset-2" href="#">
-              Terms & Conditions
-            </Link>
-          </p>
         </div>
       </div>
     </section>
