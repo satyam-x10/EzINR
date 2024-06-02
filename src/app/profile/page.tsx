@@ -1,10 +1,8 @@
-import { Profile } from '@/components/component/profile'
-import React from 'react'
+import { Profile } from "@/components/component/profile";
+import React from "react";
 
 const ProfilePage = () => {
-  return (
-    <Profile/>
-  )
-}
+  return <Profile />;
+};
 
-export default ProfilePage
+export default ProfilePage;

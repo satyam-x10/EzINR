@@ -14,7 +14,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 
 export function BorrowCard() {
-
   const [Loan, setLoan] = useState({});
 
   const [title, setTitle] = useState("");
@@ -28,13 +27,14 @@ export function BorrowCard() {
 
   useEffect(() => {
     if (amount && interest && timespan) {
-      const durationInDays = (new Date(timespan).getTime() - Date.now()) / (1000 * 60 * 60 * 24);
+      const durationInDays =
+        (new Date(timespan).getTime() - Date.now()) / (1000 * 60 * 60 * 24);
       setDurationDays(Math.ceil(durationInDays)); // Rounding up to the nearest whole day
       setExpectedReturn(amount * (1 + interest / 100));
     }
   }, [amount, interest, timespan]);
 
-  const handleSubmit = (e:any) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     const loanData = {
       user: "60b9b3b3b3b3b3b3b3b3b3b3",
@@ -122,7 +122,8 @@ export function BorrowCard() {
           </div>
           <div>
             <div className="px-2 float-end">
-              Expected to return {expectedReturn.toFixed(2)} INR after {durationDays} days
+              Expected to return {expectedReturn.toFixed(2)} INR after{" "}
+              {durationDays} days
             </div>
           </div>
           <Button className="w-full" type="submit">

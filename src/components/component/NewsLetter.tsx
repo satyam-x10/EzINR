@@ -11,7 +11,8 @@ const NewsLetter = () => {
             Dont missyour loans from EzINR
           </h2>
           <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-            We will inform you once someone is interested in your loan request on this email.
+            We will inform you once someone is interested in your loan request
+            on this email.
           </p>
         </div>
         <div className="mx-auto w-full max-w-sm space-y-2">

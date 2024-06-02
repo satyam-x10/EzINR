@@ -20,8 +20,8 @@ const HotLoans = () => {
           </div>
         </div>
         <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
-          <div className="grid gap-6">       
-           <LoanButton />            
+          <div className="grid gap-6">
+            <LoanButton />
           </div>
           <div className="flex flex-col justify-center space-y-4">
             <div className="space-y-2">

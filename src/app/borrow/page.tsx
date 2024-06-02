@@ -1,10 +1,8 @@
-import { BorrowCard } from '@/components/component/borrow-card'
-import React from 'react'
+import { BorrowCard } from "@/components/component/borrow-card";
+import React from "react";
 
 const BorrowPage = () => {
-  return (
-    <BorrowCard/>
-  )
-}
+  return <BorrowCard />;
+};
 
-export default BorrowPage
+export default BorrowPage;
