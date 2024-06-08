@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-
+import { Button } from "../ui/button";
 function DollarSignIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -61,13 +61,6 @@ const Navbar = () => {
         >
           Profile
         </Link>
-        <div
-          onClick={() => {
-            signIn("google");
-          }}
-        >
-          signIN
-        </div>
       </nav>
     </header>
   );

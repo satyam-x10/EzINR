@@ -3,8 +3,10 @@ import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-
+import { signIn, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 export function Profile() {
+  const session = useSession();
   return (
     <div className="w-full mx-auto py-8 px-4 md:px-6">
       <div className="grid md:grid-cols-[200px_1fr] gap-8">
@@ -27,6 +29,22 @@ export function Profile() {
           >
             Verify
           </Button>
+          <div>
+            {session.status==="authenticated" && <Button
+              onClick={() => {
+                signOut()
+              }}
+            >
+              Signout
+            </Button>}
+            {session.status!="authenticated" && <Button
+              onClick={() => {
+                signIn('google')
+              }}
+            >
+              SignIn
+            </Button>}
+          </div>
         </div>
         <div className="grid gap-6">
           <div className="grid gap-2">
