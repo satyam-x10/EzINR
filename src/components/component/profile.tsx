@@ -9,35 +9,36 @@ import { useEffect, useState } from "react";
 import LoanCard from "./LoanCard";
 export function Profile() {
   const session = useSession();
-  const [Data, setData] = useState(session.data?.user);
-  const [Loans, setLoans] = useState(null);
-  const [sliceLoan, setSliceLoan] = useState(1);
+  const [Data, setData] = useState(session.data?.user)
+  const [Loans, setLoans] = useState(null)
+  const [sliceLoan, setSliceLoan] = useState(1)
   useEffect(() => {
-    setData(session.data?.user);
+    setData(session.data?.user)
     async function fetchUserData() {
       if (session.data?.user?.email) {
-        const response = await fetch(
-          `/api/user?email=${session.data?.user?.email}`,
-        );
+
+        const response = await fetch(`/api/user?email=${session.data?.user?.email}`);
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        setData((prevData) => ({ ...prevData, ...data.user }));
-        console.log("Data is ", Data);
+        setData(prevData => ({ ...prevData, ...(data.user) }));
+
+
       }
     }
     async function fetchLoanData() {
       if (session.data?.user?.email) {
-        const response = await fetch(
-          `/api/loan?email=${session.data?.user?.email}`,
-        );
+
+        const response = await fetch(`/api/loan?email=${session.data?.user?.email}`);
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
         const loans = await response.json();
-        setLoans(loans);
-        console.log(loans);
+        setLoans(loans)
+        
+
+
       }
     }
 
@@ -55,7 +56,9 @@ export function Profile() {
           </Avatar>
           <div className="text-center">
             <h2 className="text-xl font-semibold">{Data?.name}</h2>
-            <p className="text-gray-500 dark:text-gray-400">{Data?.email}</p>
+            <p className="text-gray-500 dark:text-gray-400">
+              {Data?.email}
+            </p>
           </div>
 
           <Button
@@ -66,24 +69,20 @@ export function Profile() {
             Verify
           </Button>
           <div>
-            {session.status === "authenticated" && (
-              <Button
-                onClick={() => {
-                  signOut();
-                }}
-              >
-                Signout
-              </Button>
-            )}
-            {session.status != "authenticated" && (
-              <Button
-                onClick={() => {
-                  signIn("google");
-                }}
-              >
-                SignIn
-              </Button>
-            )}
+            {session.status === "authenticated" && <Button
+              onClick={() => {
+                signOut()
+              }}
+            >
+              Signout
+            </Button>}
+            {session.status != "authenticated" && <Button
+              onClick={() => {
+                signIn('google')
+              }}
+            >
+              SignIn
+            </Button>}
           </div>
         </div>
         <div className="grid gap-6">
@@ -111,19 +110,16 @@ export function Profile() {
                   <h4 className="text-base font-semibold">Active Loans</h4>
                   <Link
                     className="text-gray-900 hover:underline dark:text-gray-50"
-                    onClick={() => {
-                      setSliceLoan(100);
-                    }}
-                    href="#"
+                    onClick={()=>{setSliceLoan(100)}}
+                    href='#'
                   >
                     View all
                   </Link>
                 </div>
                 <div className="grid gap-3">
-                  {Loans &&
-                    Loans.loan
-                      .slice(0, sliceLoan)
-                      .map((loan) => <LoanCard key={loan._id} data={loan} />)}
+                  {Loans && Loans.loan.slice(0,sliceLoan).map((loan) => (
+                    <LoanCard key={loan._id} data={loan} />
+                  ))}
                 </div>
               </div>
             </div>
