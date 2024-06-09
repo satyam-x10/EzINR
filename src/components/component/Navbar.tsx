@@ -1,8 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { signIn } from "next-auth/react";
-import { Button } from "../ui/button";
+
 function DollarSignIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -48,12 +47,6 @@ const Navbar = () => {
           href="/rules"
         >
           Rules
-        </Link>
-        <Link
-          className="text-sm font-medium hover:underline underline-offset-4"
-          href="/friends"
-        >
-          Friends
         </Link>
         <Link
           className="text-sm font-medium hover:underline underline-offset-4"

@@ -1,13 +1,12 @@
-'use client'
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Button } from "@/components/ui/button"
-import { useSession } from "next-auth/react"
-import { useEffect, useState } from "react"
+"use client";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 export function VerifyProfile() {
-
   const session = useSession();
   const [email, setEmail] = useState("email loading...");
   const [name, setName] = useState("name loading...");
@@ -28,47 +27,52 @@ export function VerifyProfile() {
         email,
         phone,
         address,
-        dob
+        dob,
       };
       try {
-        const res = await fetch('/api/user', {
-          method: 'POST',
+        const res = await fetch("/api/user", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(data)
+          body: JSON.stringify(data),
         });
 
         if (res.ok) {
-          window.location.href="../verify/phone";
+          window.location.href = "../verify/phone";
         } else {
-          console.log('Failed to create user. Please try again.');
+          console.log("Failed to create user. Please try again.");
         }
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
       }
     } else {
-      alert('Please fill out all fields before submitting.');
+      alert("Please fill out all fields before submitting.");
     }
   };
-
 
   return (
     <main className="w-full max-w-[800px] px-4 py-12 mx-auto">
       <div className="space-y-4">
         <h1 className="text-3xl font-bold">Verify Your Information</h1>
-        <p className="text-gray-500 dark:text-gray-400">Please review and update your personal details below.</p>
+        <p className="text-gray-500 dark:text-gray-400">
+          Please review and update your personal details below.
+        </p>
       </div>
       <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
-            <div className="border rounded-lg p-2" id="name">{name}</div>
+            <div className="border rounded-lg p-2" id="name">
+              {name}
+            </div>
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
-            <div className="border rounded-lg p-2" id="email">{email}</div>
+            <div className="border rounded-lg p-2" id="email">
+              {email}
+            </div>
           </div>
 
           <div className="space-y-2">

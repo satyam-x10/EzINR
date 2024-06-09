@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { HomePage } from "@/components/component/homepage";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";

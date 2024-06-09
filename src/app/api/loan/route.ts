@@ -8,12 +8,13 @@ export async function GET(request: Request) {
     const url = new URL(request.url);
     const email = url.searchParams.get("email"); // Extract email from query parameters
     const loanId = url.searchParams.get("loan_id"); // Extract email from query parameters
+    const allLoans = url.searchParams.get("allLoans"); // Extract email from query parameters
 
-    if (!email && !loanId) {
-      return NextResponse.json({ error: "Email is required" }, { status: 400 });
+    if (!email && !loanId && !allLoans) {
+      return NextResponse.json({ error: "query is required" }, { status: 400 });
     }
 
-    const query = email ? { email } : { _id:loanId };
+    const query = email ? { email } : loanId ? { _id: loanId } : {};
     const loan = await Loan.find(query);
     if (!loan) {
       return NextResponse.json({ error: "Loan not found" }, { status: 404 });
@@ -36,7 +37,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       { message: "Loan created successfully", loan: newLoan },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("Error creating Loan:", error);
