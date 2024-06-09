@@ -11,7 +11,7 @@ const LoanCard = (loan) => {
           Rs. {loan.amount} | {loan.repaymentTerm} | {loan.status}
         </p>
       </div>
-      <Button size="sm" variant="outline">
+      <Button onClick={()=>{window.location.href=`/borrow/${loan._id}`}} size="sm" variant="outline">
         View
       </Button>
     </div>

@@ -51,8 +51,7 @@ export function Profile() {
       <div className="grid md:grid-cols-[200px_1fr] gap-8">
         <div className="flex flex-col items-center gap-4">
           <Avatar className="w-20 h-20">
-            <AvatarImage alt="User Avatar" src="/placeholder-user.jpg" />
-            <AvatarFallback>JP</AvatarFallback>
+            <AvatarImage alt="User Avatar" src={Data?.image} />
           </Avatar>
           <div className="text-center">
             <h2 className="text-xl font-semibold">{Data?.name}</h2>
