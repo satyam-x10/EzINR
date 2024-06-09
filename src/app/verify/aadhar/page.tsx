@@ -1,7 +1,8 @@
+import { VerifyAadharNo } from "@/components/component/verify-aadhar-no";
 import React from "react";
 
 const AadharVerify = () => {
-  return <div>AadharVerify</div>;
+  return <VerifyAadharNo/>;
 };
 
 export default AadharVerify;
