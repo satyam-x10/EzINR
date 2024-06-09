@@ -12,10 +12,11 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { useSession } from "next-auth/react";
 
 export function BorrowCard() {
   const [Loan, setLoan] = useState({});
-
+  const session = useSession();
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState(0);
   const [interest, setInterest] = useState(0);
@@ -34,25 +35,62 @@ export function BorrowCard() {
     }
   }, [amount, interest, timespan]);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     const loanData = {
-      user: "60b9b3b3b3b3b3b3b3b3b3b3",
-      title: title,
+      email: session.data?.user?.email, // Assuming this is the ID of the user creating the loan
+      info: title,
       amount: amount,
-      interest: interest,
-      lateCharge: lateCharge,
-      timespan: timespan,
+      interestRate: interest,
+      latePaymentFee: lateCharge,
+      repaymentTerm: timespan,
       remarks: remarks,
       expectedReturn: expectedReturn,
       durationDays: durationDays,
     };
-    setLoan(loanData);
-    console.log("submitting ", loanData);
+
+    try {
+      const response = await fetch("/api/loan", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(loanData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create loan");
+      }
+
+      const responseData = await response.json();
+      console.log("Loan created:", responseData);
+
+      // Optionally, you can reset the form fields after successful submission
+      setTitle("");
+      setAmount(0);
+      setInterest(0);
+      setLateCharge(0);
+      setTimespan("");
+      setRemarks("");
+      setExpectedReturn(0);
+      setDurationDays(0);
+    } catch (error) {
+      console.error("Error creating loan:", error);
+      // Handle error here, such as displaying an error message to the user
+    }
+
+    window.location.href = "/";
+  };
+
+  const handleClose = () => {
+    window.location.href = "/";
   };
 
   return (
     <Card className="w-full">
+      <Button className="float-right m-2 " onClick={handleClose}>
+        CLOSE
+      </Button>
       <CardHeader>
         <CardTitle>Apply for a Loan</CardTitle>
         <CardDescription>
