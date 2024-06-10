@@ -11,7 +11,7 @@ const Notification = () => {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const response = await fetch(`/api/notifications?email=${email}`);
+        const response = await fetch(`/api/notification?email=${email}`);
         if (!response.ok) {
           throw new Error(`Error fetching notifications: ${response.statusText}`);
         }
@@ -32,7 +32,12 @@ const Notification = () => {
       {notification?.notifications?.length && notification?.notifications?.map((message, index) => (
         <div key={index}><p className="text-black flex justify-between items-center bg-slate-500 p-2 rounded-lg m-2">
           <div>{message.split('.')[0]}</div>
-          <Button className='' >Check Details</Button>
+          <div>
+          <Button className='mx-2' onClick={() => {
+            window.location.href = `/borrow/${(message.split('.')[1].replace(' ', ""))}`
+          }} >Check Loan Details</Button>
+          <Button>Proceed </Button>
+          </div>
         </p>
         </div>
       ))}

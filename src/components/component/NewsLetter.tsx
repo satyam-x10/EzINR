@@ -17,7 +17,7 @@ const NewsLetter = () => {
     const data = await res.json();
     console.log(data);
     
-    setAlertContact(data.alertContacts.telegram)
+    setAlertContact(data?.alertContacts?.telegram)
     
     // setAlertContact(res.data);
   };
