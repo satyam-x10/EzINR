@@ -10,7 +10,7 @@ const LoanCard = ({ data }) => {
   return (
     <div
       className={`grid grid-cols-[1fr_auto] items-center gap-4 border rounded-lg p-2 ${
-        email === loan.email ? "border-green-700" : "border-black"
+        email === loan.email ? "border-yellow-700" : "border-slate-500"
       }`}
     >
       <div className="grid gap-1">

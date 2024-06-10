@@ -16,7 +16,7 @@ const BorrowIdPage = ({ params }: { params: any }) => {
       setLoan(IDloan);
     }
     fetchLoanData();
-  }, []);
+  }, [params.id]);
 
   return <BorrowIdCard data={loan} />;
 };

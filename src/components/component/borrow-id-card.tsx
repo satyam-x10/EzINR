@@ -13,9 +13,32 @@ export function BorrowIdCard(data) {
   const session = useSession();
   const Data = data?.data?.loan[0];
   const [profile_status, setProfile_status] = useState(-1);
-  function notifyParty() {
 
+  async function notifyParty(email, message) {
+    try {
+      const response = await fetch('/api/notification', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, message }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Error creating notification:', errorData);
+        return { success: false, error: errorData };
+      }
+
+      const responseData = await response.json();
+      console.log('Notification created successfully:', responseData);
+      return { success: true, data: responseData };
+    } catch (error) {
+      console.error('Error creating notification:', error);
+      return { success: false, error };
+    }
   }
+
   return (
     <div>
       <Card className="w-full">
@@ -82,9 +105,16 @@ export function BorrowIdCard(data) {
             <div className="p-2 rounded-lg bg-red-500">You can't grant your own loan. LOL</div>
 
           ) : (
-           <Button onClick={notifyParty}>Interested in granting</Button>
-
-          )}
+            <Button
+              onClick={() =>
+                notifyParty(
+                  Data.email,
+                  `${session?.data.user?.name} is interested in your loan of ${Data.info}. ${Data._id}`
+                )
+              }
+            >
+              Interested in granting
+            </Button>)}
         </CardFooter>
       </Card>
       <div className="p-2 bg-slate-600">
