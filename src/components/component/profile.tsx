@@ -17,7 +17,7 @@ export function Profile() {
     async function fetchUserData() {
       if (session.data?.user?.email) {
         const response = await fetch(
-          `/api/user?email=${session.data?.user?.email}`,
+          `/api/alertContact?email=${session.data?.user?.email}`,
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");

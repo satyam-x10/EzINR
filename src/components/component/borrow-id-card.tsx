@@ -7,10 +7,15 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 export function BorrowIdCard(data) {
+  const session = useSession();
   const Data = data?.data?.loan[0];
-  const [profile_status,setProfile_status]=useState(-1);
+  const [profile_status, setProfile_status] = useState(-1);
+  function notifyParty() {
+
+  }
   return (
     <div>
       <Card className="w-full">
@@ -73,13 +78,19 @@ export function BorrowIdCard(data) {
         </CardContent>
         <CardFooter className="flex justify-end">
           <div className="mx-2">we will verify profiles of both the parties. Then your contact details will be sent to the other party. </div>
-          <Button> Interested in granting</Button>
+          {session.data?.user?.email === Data?.email || !Data ? (
+            <div className="p-2 rounded-lg bg-red-500">You can't grant your own loan. LOL</div>
+
+          ) : (
+           <Button onClick={notifyParty}>Interested in granting</Button>
+
+          )}
         </CardFooter>
       </Card>
       <div className="p-2 bg-slate-600">
-        {profile_status==-1 && <div>Profiles status not verified</div>}
-        {profile_status==0 && <div> verifying profiles status...</div>}
-        {profile_status==1 && <div>Status Verified</div>}
+        {profile_status == -1 && <div>Profiles status not verified</div>}
+        {profile_status == 0 && <div> verifying profiles status...</div>}
+        {profile_status == 1 && <div>Status Verified</div>}
       </div>
     </div>
 
