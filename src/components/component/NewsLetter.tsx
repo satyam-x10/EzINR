@@ -1,53 +1,18 @@
 'use client'
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 
 const NewsLetter = () => {
-  const [alertContact, setAlertContact]= useState();
-  const [telegram, setTelegram] = useState<Number>();
-  const session=useSession();
-  const email= session.data?.user?.email;
-  const getalertContact = async () => {
- 
-    const res = await fetch(
-      `/api/alertContact?email=${email}`,
-    );
-    const data = await res.json();
-    console.log(data);
-    
-    setAlertContact(data?.alertContacts?.telegram)
-    
-    // setAlertContact(res.data);
-  };
-  useEffect(() => {
-    if(!email) return
-    
-    getalertContact();
-      
-  }, [email,session])
-  
+
+  const session = useSession();
+  const email = session.data?.user?.email;
+
+
+
   const handleSubmit = async (event) => {
-    event.preventDefault();
 
-    const res = await fetch('/api/alertContact', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({  telegram,email }),
-    });
-
-    if (res.ok) {
-      // Handle successful response
-      console.log('Success:', await res.json());
-      getalertContact();
-    } else {
-      // Handle error response
-      console.error('Error:', res.statusText);
-    }
-    window.location.reload();
   };
 
   return (
@@ -61,20 +26,10 @@ const NewsLetter = () => {
             We will inform you via email or Telegram once someone is interested in your loan request.
           </p>
         </div>
-        <div className="mx-auto w-full max-w-sm space-y-2">
-          <form className="flex space-x-2" onSubmit={handleSubmit}>
-            <Input
-              className="max-w-lg flex-1"
-              placeholder={
-                alertContact
-                  ? `${alertContact} is your current Telegram.`
-                  : "Enter  Telegram phone"
-              }              type="number"
-              value={telegram}
-              onChange={(e) => setTelegram(e.target.value)}
-            />
-            
-            <Button type="submit">Get Started</Button>
+        <div className="mx-auto w-full max-w-2xl space-y-2">
+          <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
+            <div className="p-1 underline">we will keep u posted on ur email {email}</div>
+            <div className="p-2 rounded-lg bg-slate-700 items-center flex justify-evenly">U can also Send hi on telegram to be updated <Button >Send Hi</Button></div>
           </form>
         </div>
       </div>
