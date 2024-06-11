@@ -8,9 +8,7 @@ export function VerifyAadharNo() {
   const [OtpSent, setOtpSent] = useState<boolean>(false);
   const [aadhar, setAadhar] = useState<number>();
 
-  function sendOTP() {
-    
-  }
+  function sendOTP() {}
   return (
     <div className="mx-auto max-w-md space-y-6 px-4 py-12">
       {!OtpSent && (

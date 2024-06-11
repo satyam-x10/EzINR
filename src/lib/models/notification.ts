@@ -7,7 +7,7 @@ const notificationSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-    },    
+    },
     notifications: [
       {
         type: String,
@@ -17,7 +17,7 @@ const notificationSchema = new Schema(
   },
   {
     Collection: "EzINR",
-  }
+  },
 );
 
 const Notification =

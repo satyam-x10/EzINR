@@ -9,21 +9,21 @@ import { useEffect, useState } from "react";
 import LoanCard from "./LoanCard";
 export function Profile() {
   const session = useSession();
-  const [Data, setData] = useState(session.data?.user);
-  const [Loans, setLoans] = useState(null);
+  const [Data, setData] = useState<any>(session.data?.user);
+  const [Loans, setLoans] = useState<any>(null);
   const [sliceLoan, setSliceLoan] = useState(1);
   useEffect(() => {
     setData(session.data?.user);
     async function fetchUserData() {
       if (session.data?.user?.email) {
         const response = await fetch(
-          `/api/alertContact?email=${session.data?.user?.email}`,
+          `/api/user?email=${session.data?.user?.email}`,
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        setData((prevData) => ({ ...prevData, ...data.user }));
+        setData((prevData:any) => ({ ...prevData, ...data.user }));
       }
     }
     async function fetchLoanData() {
@@ -48,7 +48,7 @@ export function Profile() {
       <div className="grid md:grid-cols-[200px_1fr] gap-8">
         <div className="flex flex-col items-center gap-4">
           <Avatar className="w-20 h-20">
-            <AvatarImage alt="User Avatar" src={Data?.image} />
+            <AvatarImage alt="User Avatar" src={Data?.image||""} />
           </Avatar>
           <div className="text-center">
             <h2 className="text-xl font-semibold">{Data?.name}</h2>
@@ -91,7 +91,7 @@ export function Profile() {
                 <span className="text-gray-500 dark:text-gray-400">
                   Address
                 </span>
-                <p>{Data?.address}</p>
+                <p>{Data?.address||""}</p>
               </div>
               <div className="grid gap-1">
                 <span className="text-gray-500 dark:text-gray-400">Phone</span>
@@ -120,7 +120,7 @@ export function Profile() {
                   {Loans &&
                     Loans.loan
                       .slice(0, sliceLoan)
-                      .map((loan) => <LoanCard key={loan._id} data={loan} />)}
+                      .map((loan:any) => <LoanCard key={loan._id} data={loan} />)}
                 </div>
               </div>
             </div>

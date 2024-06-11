@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import { useSession } from "next-auth/react";
 
-const LoanCard = ({ data }) => {
+const LoanCard = ({ data }:{data:any}) => {
   const loan = data;
   const { data: sessionData } = useSession();
   const email = sessionData?.user?.email;
@@ -16,7 +16,8 @@ const LoanCard = ({ data }) => {
       <div className="grid gap-1">
         <p className="font-medium">{loan.info}</p>
         <p className="text-gray-500 dark:text-gray-400">
-          Rs. {loan.amount} | {loan.repaymentTerm} | {loan.status}
+          Rs. {loan.amount} | {loan.repaymentTerm.split("T")[0]} |
+          {loan.interestRate}% | {loan.status}
         </p>
       </div>
       <Button

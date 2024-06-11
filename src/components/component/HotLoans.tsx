@@ -11,7 +11,8 @@ const HotLoans = () => {
               Make ur Loan stand out by paying just a little.
             </h2>
             <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              Browse through your personal loans and select the one u want to advertise.
+              Browse through your personal loans and select the one u want to
+              advertise.
             </p>
           </div>
         </div>

@@ -1,4 +1,3 @@
-
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -26,16 +25,16 @@ const userSchema = new Schema(
       type: Date,
       required: true,
     },
-    aadhar:{
-      type:Number,
-      required:false,
-      unique:true
+    aadhar: {
+      type: Number,
+      required: false,
+      unique: true,
     },
-    upi:{
-      type:Number,
-      required:false,
-      unique:true
-    }
+    upi: {
+      type: Number,
+      required: false,
+      unique: true,
+    },
   },
   { Collection: "EzINR" },
 );

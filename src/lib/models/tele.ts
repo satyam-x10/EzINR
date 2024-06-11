@@ -15,7 +15,7 @@ const telegramSchema = new Schema(
   },
   {
     Collection: "EzINR",
-  }
+  },
 );
 
 const Telegram =

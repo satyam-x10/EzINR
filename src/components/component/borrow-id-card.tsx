@@ -6,10 +6,10 @@ import {
   Card,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 
-export function BorrowIdCard(data) {
+export function BorrowIdCard(data:any) {
   const session = useSession();
   const Data = data?.data?.loan[0];
   const [chatId, setChatId] = useState();
@@ -24,9 +24,8 @@ export function BorrowIdCard(data) {
           const data = await res.json();
           setChatId(data.data.chatId);
           console.log(data.data.chatId);
-          
         } catch (error) {
-          console.error('Error fetching data:', error);
+          console.error("Error fetching data:", error);
         }
       }
     };
@@ -34,15 +33,14 @@ export function BorrowIdCard(data) {
     fetchData();
   }, [email]);
   async function sendTeleNotification() {
-
     const url = `https://api.telegram.org/bot7106305110:AAE6RQiEOPnvYUCuXFHM1RDFZv_hGLE8QH0/sendMessage?chat_id=${chatId}&text=Someone is interested in yor loan for ${Data.info}. Please check the website`;
-    
+
     try {
       const response = await fetch(url);
       const data = await response.json();
-      console.log('Notification sent:', data);
+      console.log("Notification sent:", data);
     } catch (error) {
-      console.error('Error sending notification:', error);
+      console.error("Error sending notification:", error);
     }
   }
   return (
@@ -73,7 +71,9 @@ export function BorrowIdCard(data) {
             </div>
           </div>
           <div className="grid grid-cols-2 items-center gap-2">
-            <div className="text-sm text-gray-500 dark:text-gray-400">Email</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">
+              Email
+            </div>
             <div className="text-lg font-medium">{Data?.email}</div>
           </div>
           <div className="grid grid-cols-2 items-center gap-2">
@@ -84,7 +84,9 @@ export function BorrowIdCard(data) {
             <div className="text-sm text-gray-500 dark:text-gray-400">
               Late Payment Fee
             </div>
-            <div className="text-lg font-medium">INR {Data?.latePaymentFee}</div>
+            <div className="text-lg font-medium">
+              INR {Data?.latePaymentFee}
+            </div>
           </div>
           <div className="grid grid-cols-2 items-center gap-2">
             <div className="text-sm text-gray-500 dark:text-gray-400">
@@ -95,7 +97,9 @@ export function BorrowIdCard(data) {
             </div>
           </div>
           <div className="grid grid-cols-2 items-center gap-2">
-            <div className="text-sm text-gray-500 dark:text-gray-400">Status</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">
+              Status
+            </div>
             <div className="text-lg font-medium">{Data?.status}</div>
           </div>
           <div className="grid grid-cols-2 items-center gap-2">
@@ -106,11 +110,18 @@ export function BorrowIdCard(data) {
           </div>
         </CardContent>
         <CardFooter className="flex justify-end">
-          <div className="mx-2">we will verify profiles of both the parties. Then your contact details will be sent to the other party. </div>
+          <div className="mx-2">
+            we will verify profiles of both the parties. Then your contact
+            details will be sent to the other party.{" "}
+          </div>
           {session.data?.user?.email === Data?.email || !Data ? (
-            <div className="p-2 rounded-lg bg-red-500">You can't grant your own loan. LOL</div>
+            <div className="p-2 rounded-lg bg-red-500">
+              You cant grant your own loan. LOL
+            </div>
           ) : (
-            <Button onClick={sendTeleNotification}>Interested in granting</Button>
+            <Button onClick={sendTeleNotification}>
+              Interested in granting
+            </Button>
           )}
         </CardFooter>
       </Card>
@@ -122,4 +133,3 @@ export function BorrowIdCard(data) {
     </div>
   );
 }
-

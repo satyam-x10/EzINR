@@ -1,26 +1,27 @@
-'use client'
-import React from 'react'
-import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
-import { Button } from '@/components/ui/button';
+"use client";
+import React from "react";
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { Button } from "@/components/ui/button";
 const Notification = () => {
   const session = useSession();
   const email = session.data?.user?.email;
-  const [notification, setNotifications] = useState([]);
+  const [notification, setNotifications] = useState<any>([]);
 
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
         const response = await fetch(`/api/notification?email=${email}`);
         if (!response.ok) {
-          throw new Error(`Error fetching notifications: ${response.statusText}`);
+          throw new Error(
+            `Error fetching notifications: ${response.statusText}`,
+          );
         }
         const data = await response.json();
         console.log(data.notifications);
 
         setNotifications(data.notifications);
-      } catch (err) {
-      }
+      } catch (err) {}
     };
 
     if (email) {
@@ -29,21 +30,27 @@ const Notification = () => {
   }, [email]);
   return (
     <div>
-      {notification?.notifications?.length && notification?.notifications?.map((message, index) => (
-        <div key={index}><p className="text-black flex justify-between items-center bg-slate-500 p-2 rounded-lg m-2">
-          <div>{message.split('.')[0]}</div>
-          <div>
-          <Button className='mx-2' onClick={() => {
-            window.location.href = `/borrow/${(message.split('.')[1].replace(' ', ""))}`
-          }} >Check Loan Details</Button>
-          <Button>Proceed </Button>
+      {notification?.notifications?.length &&
+        notification?.notifications?.map((message:String, index:any) => (
+          <div key={index}>
+            <p className="text-black flex justify-between items-center bg-slate-500 p-2 rounded-lg m-2">
+              <div>{message.split(".")[0]}</div>
+              <div>
+                <Button
+                  className="mx-2"
+                  onClick={() => {
+                    window.location.href = `/borrow/${message.split(".")[1].replace(" ", "")}`;
+                  }}
+                >
+                  Check Loan Details
+                </Button>
+                <Button>Proceed </Button>
+              </div>
+            </p>
           </div>
-        </p>
-        </div>
-      ))}
+        ))}
     </div>
+  );
+};
 
-  )
-}
-
-export default Notification
+export default Notification;

@@ -19,7 +19,7 @@ export function VerifyProfile() {
     setEmail(session.data?.user?.email || "");
   }, [session]);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event:any) => {
     event.preventDefault();
     if (name && email && phone && address && dob) {
       const data = {

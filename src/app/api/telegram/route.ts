@@ -9,9 +9,12 @@ export async function POST(request: Request) {
     const { email, chatId } = body;
 
     if (!email || !chatId) {
-      return NextResponse.json({ error: "Email and chat ID are required" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Email and chat ID are required" },
+        { status: 400 },
+      );
     }
-console.log('hehe',email,chatId);
+    console.log("hehe", email, chatId);
 
     const updatedTelegram = await Telegram.findOneAndUpdate(
       { email },
@@ -41,10 +44,12 @@ export async function GET(request: Request) {
 
     const telegram = await Telegram.findOne({ email });
     console.log(telegram);
-    
 
     if (!telegram) {
-      return NextResponse.json({ error: "No Telegram chat ID found for this email" }, { status: 404 });
+      return NextResponse.json(
+        { error: "No Telegram chat ID found for this email" },
+        { status: 404 },
+      );
     }
 
     return NextResponse.json({ data: telegram });

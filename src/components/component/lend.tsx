@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import LoanCard from "./LoanCard";
 export function Lend() {
-  const [Loans, setLoans] = useState([]);
+  const [Loans, setLoans] = useState<any>([]);
 
   useEffect(() => {
     async function fetchLoanData() {
@@ -32,7 +32,7 @@ export function Lend() {
         </p>
         <div className="grid grid-cols-2 gap-3">
           {Loans &&
-            Loans?.loan?.map((loan) => <LoanCard key={loan._id} data={loan} />)}
+            Loans?.loan?.map((loan:any) => <LoanCard key={loan._id} data={loan} />)}
         </div>
       </div>
     </div>
