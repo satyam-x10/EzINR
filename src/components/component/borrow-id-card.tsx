@@ -6,16 +6,45 @@ import {
   Card,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useSession } from "next-auth/react";
 
 export function BorrowIdCard(data) {
   const session = useSession();
   const Data = data?.data?.loan[0];
+  const [chatId, setChatId] = useState();
+  const email = Data?.email;
+
   const [profile_status, setProfile_status] = useState(-1);
+  useEffect(() => {
+    const fetchData = async () => {
+      if (email) {
+        try {
+          const res = await fetch(`/api/telegram?email=${email}`);
+          const data = await res.json();
+          setChatId(data.data.chatId);
+          console.log(data.data.chatId);
+          
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      }
+    };
 
+    fetchData();
+  }, [email]);
+  async function sendTeleNotification() {
 
-
+    const url = `https://api.telegram.org/bot7106305110:AAE6RQiEOPnvYUCuXFHM1RDFZv_hGLE8QH0/sendMessage?chat_id=${chatId}&text=Someone is interested in yor loan for ${Data.info}. Please check the website`;
+    
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log('Notification sent:', data);
+    } catch (error) {
+      console.error('Error sending notification:', error);
+    }
+  }
   return (
     <div>
       <Card className="w-full">
@@ -81,7 +110,7 @@ export function BorrowIdCard(data) {
           {session.data?.user?.email === Data?.email || !Data ? (
             <div className="p-2 rounded-lg bg-red-500">You can't grant your own loan. LOL</div>
           ) : (
-            <Button>Interested in granting</Button>
+            <Button onClick={sendTeleNotification}>Interested in granting</Button>
           )}
         </CardFooter>
       </Card>

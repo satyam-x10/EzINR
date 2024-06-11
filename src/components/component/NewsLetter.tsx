@@ -45,12 +45,13 @@ const NewsLetter = () => {
       });
 
       const data = await response.json();
+      window.location.href='https://t.me/EzINR_bot'
       if (data.success) {
       }
     } catch (error) {
       console.error('Error:', error);
     }
-    window.location.reload();
+    // window.location.reload();
 
   };
 
@@ -90,6 +91,7 @@ const NewsLetter = () => {
                 />
                 <Button type="submit">Subscribe</Button>
               </div>
+                {/* <Button onClick={()=>{}}>Must send Hi from same Telegram account</Button> */}
             </form>
           )}
         </div>
