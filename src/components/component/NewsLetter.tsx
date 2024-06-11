@@ -1,19 +1,59 @@
-'use client'
-import React, { useState, useEffect } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { useSession } from "next-auth/react";
+'use client';
+import React, { useState, useEffect } from 'react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { useSession } from 'next-auth/react';
 
 const NewsLetter = () => {
+  const { data: session } = useSession();
+  const email = session?.user?.email;
 
-  const session = useSession();
-  const email = session.data?.user?.email;
+  const [DbChatId, setDBChatId] = useState('');
+  const [chatId, setChatId] = useState('');
+  // const [isSubscribed, setIsSubscribed] = useState(false);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      if (email) {
+        try {
+          const res = await fetch(`/api/telegram?email=${email}`);
+          const data = await res.json();
+          setDBChatId(data.data.chatId);
+          console.log(data.data.chatId);
+          
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      }
+    };
 
+    fetchData();
+  }, [email]);
 
   const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!email) return;
+
+    try {
+      const response = await fetch('/api/telegram', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, chatId }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+    window.location.reload();
 
   };
+
 
   return (
     <section className="w-full py-6 md:py-8 lg:py-12 border-t">
@@ -27,10 +67,31 @@ const NewsLetter = () => {
           </p>
         </div>
         <div className="mx-auto w-full max-w-2xl space-y-2">
-          <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
-            <div className="p-1 underline">we will keep u posted on ur email {email}</div>
-            <div className="p-2 rounded-lg bg-slate-700 items-center flex justify-evenly">U can also Send hi on telegram to be updated <Button >Send Hi</Button></div>
-          </form>
+          {DbChatId ? (
+            <><div className="p-1 underline">
+              We will keep you posted on your email {email}
+            </div>
+              <div className="p-2 rounded-lg bg-slate-700 text-white">
+                You will currently be notified at telegram chatId {DbChatId}
+              </div></>
+          ) : (
+            <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
+              <div className="p-1 underline">
+                We will keep you posted on your email {email}
+              </div>
+              <div className="flex gap-2">
+                <Input
+                  id="tele"
+                  placeholder="Enter Tele Chat ID to be notified on Telegram"
+                  required
+                  type="text"
+                  value={chatId}
+                  onChange={(e) => setChatId(e.target.value)}
+                />
+                <Button type="submit">Subscribe</Button>
+              </div>
+            </form>
+          )}
         </div>
       </div>
     </section>
